@@ -101,44 +101,44 @@ pub fn get_relative_caller_addr(
         // heuristics currently are only supported when we can work with absolute addresses.
         // In cases where this is not possible we skip this part entirely and use the relative
         // address calculated by the lookup result as lookup address in the module.
-        if let Some(absolute_addr) = lookup_result.object_info.rel_to_abs_addr(addr) {
-            let is_crashing_frame = index == 0;
-            let ip_register_value = if is_crashing_frame {
-                symcache
-                    .arch()
-                    .cpu_family()
-                    .ip_register_name()
-                    .and_then(|ip_reg_name| registers.get(ip_reg_name))
-                    .map(|x| x.0)
-            } else {
-                None
-            };
+        //if let Some(absolute_addr) = lookup_result.object_info.rel_to_abs_addr(addr) {
+                //     let is_crashing_frame = index == 0;
+        //     let ip_register_value = if is_crashing_frame {
+        //         symcache
+        //             .arch()
+        //             .cpu_family()
+        //             .ip_register_name()
+        //             .and_then(|ip_reg_name| registers.get(ip_reg_name))
+        //             .map(|x| x.0)
+        //     } else {
+        //         None
+        //     };
 
-            let mut instruction_info = InstructionInfo::new(symcache.arch(), absolute_addr);
-            let instruction_info = instruction_info
-                .is_crashing_frame(is_crashing_frame)
-                .signal(signal.map(|signal| signal.0))
-                .ip_register_value(ip_register_value);
+        //     let mut instruction_info = InstructionInfo::new(symcache.arch(), absolute_addr);
+        //     let instruction_info = instruction_info
+        //         .is_crashing_frame(is_crashing_frame)
+        //         .signal(signal.map(|signal| signal.0))
+        //         .ip_register_value(ip_register_value);
 
-            let absolute_caller_addr = match adjustment {
-                AdjustInstructionAddr::Yes => instruction_info.previous_address(),
-                AdjustInstructionAddr::No => instruction_info.aligned_address(),
-                AdjustInstructionAddr::Auto => instruction_info.caller_address(),
-            };
+        //     let absolute_caller_addr = match adjustment {
+        //         AdjustInstructionAddr::Yes => instruction_info.previous_address(),
+        //         AdjustInstructionAddr::No => instruction_info.aligned_address(),
+        //         AdjustInstructionAddr::Auto => instruction_info.caller_address(),
+        //     };
 
-            lookup_result
-                .object_info
-                .abs_to_rel_addr(absolute_caller_addr)
-                .ok_or_else(|| {
-                    tracing::warn!(
-                            "Underflow when trying to subtract image start addr from caller address after heuristics"
-                        );
-                    metric!(counter("relative_addr.underflow") += 1);
-                    FrameStatus::MissingSymbol
-                })
-        } else {
+        //     lookup_result
+        //         .object_info
+        //         .abs_to_rel_addr(absolute_caller_addr)
+        //         .ok_or_else(|| {
+        //             tracing::warn!(
+        //                     "Underflow when trying to subtract image start addr from caller address after heuristics"
+        //                 );
+        //             metric!(counter("relative_addr.underflow") += 1);
+        //             FrameStatus::MissingSymbol
+        //         })
+        // } else {
             Ok(addr)
-        }
+        // }
     } else {
         tracing::warn!("Underflow when trying to subtract image start addr from caller address before heuristics");
         metric!(counter("relative_addr.underflow") += 1);
