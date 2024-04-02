@@ -48,7 +48,7 @@ jobs:
 
       - name: Create Release and Upload Release Asset
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/branches/release/')
+        # if: startsWith(github.ref, 'refs/branches/release/')
         with:
           # tag_name: ${{ github.ref }}
           name: ${{ github.ref }}
@@ -61,6 +61,8 @@ jobs:
             build/wasm-split-Linux-x86_64
             build/symsorter-Linux-x86_64
             build/symbolicli-Linux-x86_64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_RELEASE_PAT }}
       # - name: Upload Release Assets
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GH_RELEASE_PAT }}
