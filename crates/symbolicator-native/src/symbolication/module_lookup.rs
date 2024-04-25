@@ -431,7 +431,7 @@ impl ModuleLookup {
 
     pub(crate) fn set_source_context(source: &str, frame: &mut RawFrame) -> Option<()> {
         let (pre_context, context_line, post_context) =
-            get_context_lines(source, frame.lineno?.try_into().ok()?, None, None)?;
+            get_context_lines(source, frame.lineno?.try_into().ok()?, 0, None)?;
         frame.pre_context = pre_context;
         frame.context_line = Some(context_line);
         frame.post_context = post_context;
@@ -476,7 +476,6 @@ impl ModuleLookup {
 
 #[cfg(test)]
 mod tests {
-    use symbolicator_service::types::RawObjectInfo;
     use symbolicator_service::utils::hex::HexValue;
 
     use super::*;

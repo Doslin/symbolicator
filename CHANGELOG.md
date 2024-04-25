@@ -1,19 +1,31 @@
 # Changelog
 
-## Unreleased
+## 24.4.1
+
+### Various fixes & improvements
+
+- fix: Always trim source context lines (#1443) by @loewenheim
+- fix(symbolicli): Add C# platform (#1442) by @loewenheim
+- fix(proguard): Don't set `in_app` if frame wasn't mapped (#1440) by @loewenheim
+- fix(proguard): Correctly compute source file name (#1441) by @loewenheim
+- Do a `cargo update` (#1439) by @Swatinem
+- ref(proguard): Increase in-memory cache size to 5GiB (#1438) by @loewenheim
+
+## 24.4.0
 
 ### Various fixes & improvements
 
 - proguard: Added a mandatory `index` field to `JvmFrame` (#1411) by @loewenheim
 - proguard: Support for source contex (#1414) by @loewenheim
 - proguard: Field `lineno` on `JvmFrame` is now optional (#1417) by @loewenheim
-- proguard: support method deobfuscation based on parameters mapping (#1418) by @viglia
+- proguard: add support for frame signature (#1425 ) by @viglia
+- proguard: add the translated and deobfuscated signature even in the case that the the whole frame could not be remapped (#1427) by @viglia
 
 ### Dependencies
 
-- Bump Native SDK from v0.7.0 to v0.7.1 ([#1416](https://github.com/getsentry/symbolicator/pull/1416))
-  - [changelog](https://github.com/getsentry/sentry-native/blob/master/CHANGELOG.md#071)
-  - [diff](https://github.com/getsentry/sentry-native/compare/0.7.0...0.7.1)
+- Bump Native SDK from v0.7.0 to v0.7.2 ([#1416](https://github.com/getsentry/symbolicator/pull/1416), [#1428](https://github.com/getsentry/symbolicator/pull/1428))
+  - [changelog](https://github.com/getsentry/sentry-native/blob/master/CHANGELOG.md#072)
+  - [diff](https://github.com/getsentry/sentry-native/compare/0.7.0...0.7.2)
 
 ## 24.3.0
 
